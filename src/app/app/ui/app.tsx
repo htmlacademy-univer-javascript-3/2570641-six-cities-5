@@ -1,9 +1,5 @@
-import MainPage from '@/pages/main/ui/main';
-
-type AppProps = {
-  places: number;
-};
+import MainPage from '@/pages/main/ui/main-page';
 
 export default function App(): JSX.Element{
-    return ( <> <MainPage /> </> );
+  return (<> <MainPage places={3122} /> </>);
 }
