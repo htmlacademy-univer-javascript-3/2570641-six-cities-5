@@ -1,4 +1,4 @@
-import PlaceCard from '@/app/cards/ui/place-card';
+import PlaceCard from '@/components/cards/place-card';
 
 type MainPageProps = {
   places: number;
