@@ -1,4 +1,4 @@
-import CardsList from '@/components/cards/cards';
+import CardsList from '@/components/cards/card-list';
 import {Offers, Offer} from '@/types/offer';
 import Map from '@/components/map/map';
 import React from 'react';

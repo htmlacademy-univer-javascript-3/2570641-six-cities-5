@@ -4,17 +4,12 @@ import { AppRoute } from '@/const';
 
 type PlaceCardProps = {
   offer: Offer;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
 }
 
 
-export default function PlaceCard({offer, onMouseEnter, onMouseLeave}: PlaceCardProps): JSX.Element {
+export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
+    <article className="cities__card place-card">
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
