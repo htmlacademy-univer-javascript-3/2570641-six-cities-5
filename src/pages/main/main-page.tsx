@@ -132,7 +132,7 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                 <div className='cities__places-list places__list tabs__content'>
                   <CardsList
                     offers={offers}
-                    selectedOffer={selectedOffer}
+                    // selectedOffer={selectedOffer}
                     setSelectedOffer={setSelectedOffer}
                   />
                 </div>

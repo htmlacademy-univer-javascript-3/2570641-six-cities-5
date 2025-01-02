@@ -6,15 +6,13 @@ import { URL_PIN, URL_PIN_ACTIVE } from '@/const';
 import { Location } from '@/types/location';
 import { Offers, Offer } from '@/types/offer';
 
-export default function Map({
-  location,
-  offers,
-  selectedOffer,
-}: {
-  location: Location;
-  offers: Offers;
-  selectedOffer: Offer | null;
-}) {
+type MapProps = {
+    location: Location;
+    offers: Offers;
+    selectedOffer: Offer | null;
+}
+
+export default function Map({ location, offers, selectedOffer }: MapProps) {
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
 

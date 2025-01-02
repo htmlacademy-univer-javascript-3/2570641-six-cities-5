@@ -8,6 +8,7 @@ import OfferPage from '@/pages/offer/offer-page';
 import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
 import { Offers } from '@/types/offer';
+import { comments } from '@/mocks/comments';
 
 type AppProps = {
   offers: Offers;
@@ -38,7 +39,7 @@ export default function App({offers}: AppProps): JSX.Element {
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers}/>}
+            element={<OfferPage offers={offers} comments={comments}/>}
           />
           <Route
             path='*'

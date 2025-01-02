@@ -3,7 +3,7 @@ import PlaceCard from '@/components/cards/place-card';
 
 type CardListProps = {
     offers: Offers;
-    selectedOffer: Offer | null;
+    // selectedOffer: Offer | null;
     setSelectedOffer: (offer: Offer | null) => void;
 };
 

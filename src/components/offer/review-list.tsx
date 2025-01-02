@@ -2,7 +2,7 @@ import { Comments } from '@/types/comment';
 import { Review } from '@/components/offer/review';
 
 type ReviewListProps = {
-    comments: Comments
+    comments: Comments;
 }
 
 export function ReviewList({ comments }: ReviewListProps) {
