@@ -7,15 +7,18 @@ import MainPage from '@/pages/main/main-page';
 import OfferPage from '@/pages/offer/offer-page';
 import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
-import { useAppDispatch, useAppSelector } from '@/hooks/index';
-import { setOffersList, } from '@/store/action';
+import { useAppSelector } from '@/hooks';
+import SpinnerPage from '@/pages/spinner/spinner-page';
 
 
 export default function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  const dispatch = useAppDispatch();
-  dispatch(setOffersList(offers));
+  if (isOffersDataLoading) {
+    return (
+      <SpinnerPage />
+    );
+  }
 
   return (
     <HelmetProvider>
