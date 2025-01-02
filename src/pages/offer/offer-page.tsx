@@ -3,20 +3,16 @@ import HeaderNav from '@/components/header/header';
 import { Helmet } from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import ReviewForm from '@/components/offer/review-form';
-import { Offers } from '@/types/offer';
 import NotFoundScreen from '@/pages/not-found/not-found-page';
 import { ReviewList } from '@/components/offer/review-list';
 import Map from '@/components/map/map';
 import { NearbyList } from '@/components/cards/nearby-list';
-import { Reviews } from '@/types/review';
+import { useAppSelector } from '@/hooks/index';
 
-type OfferPageProps = {
-  offers: Offers;
-  reviews: Reviews;
-};
+export default function OfferPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const reviews = useAppSelector((state) => state.reviews);
 
-
-export default function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
   const offer = offers.find((item) => item.id === params.id);
 
