@@ -1,10 +1,11 @@
-import PlaceCard from '@/components/cards/place-card';
+import CardsList from '@/components/cards/cards';
+import {Offers} from '@/types/offer';
 
 type MainPageProps = {
-  places: number;
+  offers: Offers;
 };
 
-export default function MainPage(props: MainPageProps): JSX.Element {
+export default function MainPage({offers}: MainPageProps): JSX.Element {
   return (
     <>
       <meta charSet='utf-8' />
@@ -96,7 +97,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
                 <b className='places__found'>
-                  {props.places} places to stay in Amsterdam
+                  {offers.length} places to stay in Amsterdam
                 </b>
                 <form className='places__sorting' action='#' method='get'>
                   <span className='places__sorting-caption'>Sort by</span>
@@ -125,11 +126,7 @@ export default function MainPage(props: MainPageProps): JSX.Element {
                   </ul>
                 </form>
                 <div className='cities__places-list places__list tabs__content'>
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
-                  <PlaceCard />
+                  <CardsList offers={offers}/>
                 </div>
               </section>
               <div className='cities__right-section'>
