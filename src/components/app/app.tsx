@@ -7,19 +7,21 @@ import MainPage from '@/pages/main/main-page';
 import OfferPage from '@/pages/offer/offer-page';
 import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
+import { offers as mockOffers } from '@/mocks/offers';
+// import { Offers } from '@/types/offer';
 
-type AppProps = {
-  placesCount: number;
-}
+// type AppProps = {
+//   offers: Offers;
+// }
 
-export default function App({placesCount}: AppProps): JSX.Element {
+export default function App(): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage places={placesCount}/>}
+            element={<MainPage offers={mockOffers}/>}
           />
           <Route
             path={AppRoute.Login}
@@ -29,15 +31,15 @@ export default function App({placesCount}: AppProps): JSX.Element {
             path={AppRoute.Favorites}
             element={
               <PrivateRoute
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage />
+                <FavoritesPage offers={mockOffers}/>
               </PrivateRoute>
             }
           />
           <Route
-            path={AppRoute.Offer}
-            element={<OfferPage />}
+            path={`${AppRoute.Offer}/:id`}
+            element={<OfferPage offers={mockOffers}/>}
           />
           <Route
             path='*'
