@@ -77,3 +77,15 @@ export enum SortType {
   PriceHighToLow = 'Price: high to low',
   TopRated = 'Top rated first',
 }
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Logout = '/logout',
+}
+
+export const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
+export const REQUEST_TIMEOUT = 5000;
+export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';

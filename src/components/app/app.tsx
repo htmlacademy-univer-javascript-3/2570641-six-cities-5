@@ -7,16 +7,9 @@ import MainPage from '@/pages/main/main-page';
 import OfferPage from '@/pages/offer/offer-page';
 import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
-import { useAppDispatch, useAppSelector } from '@/hooks/index';
-import { setOffersList, } from '@/store/action';
 
 
 export default function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-
-  const dispatch = useAppDispatch();
-  dispatch(setOffersList(offers));
-
   return (
     <HelmetProvider>
       <BrowserRouter>
