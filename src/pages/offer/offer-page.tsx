@@ -4,19 +4,19 @@ import { Helmet } from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import ReviewForm from '@/components/offer/review-form';
 import { Offers } from '@/types/offer';
-import { Comments } from '@/types/comment';
 import NotFoundScreen from '@/pages/not-found/not-found-page';
 import { ReviewList } from '@/components/offer/review-list';
 import Map from '@/components/map/map';
 import { NearbyList } from '@/components/cards/nearby-list';
+import { Reviews } from '@/types/review';
 
 type OfferPageProps = {
   offers: Offers;
-  comments: Comments;
+  reviews: Reviews;
 };
 
 
-export default function OfferPage({ offers, comments }: OfferPageProps): JSX.Element {
+export default function OfferPage({ offers, reviews }: OfferPageProps): JSX.Element {
   const params = useParams();
   const offer = offers.find((item) => item.id === params.id);
 
@@ -159,8 +159,8 @@ export default function OfferPage({ offers, comments }: OfferPageProps): JSX.Ele
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
-                <ReviewList comments={comments} />
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <ReviewList reviews={reviews} />
                 <ReviewForm />
               </section>
             </div>
