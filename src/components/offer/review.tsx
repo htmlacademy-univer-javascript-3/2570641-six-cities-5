@@ -9,7 +9,7 @@ export function Review({ review }: ReviewProps) {
     year: 'numeric',
     month: 'long',
   });
-  
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
