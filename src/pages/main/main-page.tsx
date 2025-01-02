@@ -1,11 +1,15 @@
 import CardsList from '@/components/cards/cards';
-import {Offers} from '@/types/offer';
+import {Offers, Offer} from '@/types/offer';
+import Map from '@/components/map/map';
+import React from 'react';
 
 type MainPageProps = {
   offers: Offers;
 };
 
 export default function MainPage({offers}: MainPageProps): JSX.Element {
+  const [selectedOffer, setSelectedOffer] = React.useState<Offer | null>(null);
+
   return (
     <>
       <meta charSet='utf-8' />
@@ -126,11 +130,21 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                   </ul>
                 </form>
                 <div className='cities__places-list places__list tabs__content'>
-                  <CardsList offers={offers}/>
+                  <CardsList
+                    offers={offers}
+                    // selectedOffer={selectedOffer}
+                    setSelectedOffer={setSelectedOffer}
+                  />
                 </div>
               </section>
               <div className='cities__right-section'>
-                <section className='cities__map map'></section>
+                <section className='cities__map map'>
+                  <Map
+                    location={offers[0].city.location}
+                    offers={offers}
+                    selectedOffer={selectedOffer}
+                  />
+                </section>
               </div>
             </div>
           </div>
