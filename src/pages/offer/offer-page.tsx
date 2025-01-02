@@ -163,9 +163,9 @@ export default function OfferPage(): JSX.Element {
           </div>
           <section className="offer__map map">
             <Map
-              location={offers[0].city.location}
+              location={offer.city.location}
               offers={offers}
-              selectedOffer={offers[0]}
+              selectedOffer={offer}
             />
           </section>
         </section>

@@ -6,7 +6,6 @@ import CitiesList from '@/components/map/cities-list';
 import { CITIES } from '@/const';
 import { useAppSelector } from '@/hooks/index';
 
-
 export default function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const city = useAppSelector((state) => state.city);
@@ -17,10 +16,10 @@ export default function MainPage(): JSX.Element {
   const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
 
   useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city);
+    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
     setCurrentCityOffers(filteredOffers);
   }, [city, offers]);
-
+  
   return (
     <>
       <meta charSet='utf-8' />
@@ -80,7 +79,7 @@ export default function MainPage(): JSX.Element {
             <div className='cities__places-container container'>
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
-                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city}`}</b>
+                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
                 <form className='places__sorting' action='#' method='get'>
                   <span className='places__sorting-caption'>Sort by</span>
                   <span className='places__sorting-type' tabIndex={0}>
@@ -117,7 +116,7 @@ export default function MainPage(): JSX.Element {
               <div className='cities__right-section'>
                 <section className='cities__map map'>
                   <Map
-                    location={offers[0].city.location}
+                    location={city.location}
                     offers={currentCityOffers}
                     selectedOffer={selectedOffer}
                   />

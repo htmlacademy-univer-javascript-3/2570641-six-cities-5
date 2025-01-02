@@ -1,25 +1,23 @@
 import { useAppDispatch } from '@/hooks/index';
 import { setCity } from '@/store/action';
+import { Cities } from '@/types/city';
 
 type CitiesListProps = {
-  cities: {
-    name: string;
-    id: number;
-  }[];
+  cities: Cities;
 };
 
 export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: string) => {
-    dispatch(setCity(city));
+    dispatch(setCity(cities.find((cityItem) => cityItem.name === city)!));
   };
 
   return (
     <ul className="locations__list tabs__list">
       {cities.map((city) => (
         <li
-          key={city.id}
+          key={city.name}
           className="locations__item"
           onClick={() => handleCityChange(city.name)}
         >

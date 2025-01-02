@@ -4,16 +4,17 @@ import { Offers } from '../types/offer';
 import { offers as mockOffers } from '@/mocks/offers';
 import { DEFAULT_CITY } from '@/const';
 import { Reviews } from '@/types/review';
+import { City } from '@/types/city';
 
 
 type StateType = {
-  city: string;
+  city: City;
   offers: Offers;
   reviews: Reviews;
 };
 
 const initialState: StateType = {
-  city: DEFAULT_CITY.name,
+  city: DEFAULT_CITY,
   offers: [],
   reviews: [],
 };
