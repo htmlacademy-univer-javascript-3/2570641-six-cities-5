@@ -35,7 +35,7 @@ export default function MainPage(): JSX.Element {
 
     setCurrentCityOffers(sortedOffers);
   }, [city, offers, sortType]);
-  
+
   return (
     <>
       <meta charSet='utf-8' />

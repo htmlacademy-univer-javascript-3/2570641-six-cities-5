@@ -30,6 +30,6 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = mockOffers;
     })
     .addCase(setSortType, (state, { payload }) => {
-      state.sortType = payload})
-    ;
+      state.sortType = payload;
+    });
 });
