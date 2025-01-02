@@ -1,14 +1,25 @@
-import CardsList from '@/components/cards/card-list';
-import {Offers, Offer} from '@/types/offer';
+import OffersList from '@/components/cards/card-list';
+import {Offers} from '@/types/offer';
 import Map from '@/components/map/map';
-import React from 'react';
+import {useState, useEffect} from 'react';
+import CitiesList from '@/components/map/cities-list';
+import { CITIES } from '@/const';
+import { useAppSelector } from '@/hooks/index';
 
-type MainPageProps = {
-  offers: Offers;
-};
 
-export default function MainPage({offers}: MainPageProps): JSX.Element {
-  const [selectedOffer, setSelectedOffer] = React.useState<Offer | null>(null);
+export default function MainPage(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+  const city = useAppSelector((state) => state.city);
+
+  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
+  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
+
+  const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
+
+  useEffect(() => {
+    const filteredOffers = offers.filter((offer) => offer.city.name === city);
+    setCurrentCityOffers(filteredOffers);
+  }, [city, offers]);
 
   return (
     <>
@@ -62,47 +73,14 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
           <h1 className='visually-hidden'>Cities</h1>
           <div className='tabs'>
             <section className='locations container'>
-              <ul className='locations__list tabs__list'>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item' href='#'>
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item' href='#'>
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item' href='#'>
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item tabs__item--active'>
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item' href='#'>
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className='locations__item'>
-                  <a className='locations__item-link tabs__item' href='#'>
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
+              <CitiesList cities={CITIES}/>
             </section>
           </div>
           <div className='cities'>
             <div className='cities__places-container container'>
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
-                <b className='places__found'>
-                  {offers.length} places to stay in Amsterdam
-                </b>
+                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city}`}</b>
                 <form className='places__sorting' action='#' method='get'>
                   <span className='places__sorting-caption'>Sort by</span>
                   <span className='places__sorting-type' tabIndex={0}>
@@ -130,10 +108,9 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                   </ul>
                 </form>
                 <div className='cities__places-list places__list tabs__content'>
-                  <CardsList
-                    offers={offers}
-                    // selectedOffer={selectedOffer}
-                    setSelectedOffer={setSelectedOffer}
+                  <OffersList
+                    offers={currentCityOffers}
+                    setSelectedOffer={setActiveOfferId}
                   />
                 </div>
               </section>
@@ -141,7 +118,7 @@ export default function MainPage({offers}: MainPageProps): JSX.Element {
                 <section className='cities__map map'>
                   <Map
                     location={offers[0].city.location}
-                    offers={offers}
+                    offers={currentCityOffers}
                     selectedOffer={selectedOffer}
                   />
                 </section>

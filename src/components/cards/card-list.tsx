@@ -1,20 +1,19 @@
-import { Offers, Offer } from '@/types/offer';
+import { Offers } from '@/types/offer';
 import PlaceCard from '@/components/cards/place-card';
 
-type CardListProps = {
+type OffersListProps = {
     offers: Offers;
-    // selectedOffer: Offer | null;
-    setSelectedOffer: (offer: Offer | null) => void;
+    setSelectedOffer: (offer: string | null) => void;
 };
 
 
-export default function CardList(props: CardListProps): JSX.Element {
+export default function OffersList(props: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {props.offers.map((offer) => (
         <div
           key={offer.id}
-          onMouseEnter={() => props.setSelectedOffer(offer)}
+          onMouseEnter={() => props.setSelectedOffer(offer.id)}
           onMouseLeave={() => props.setSelectedOffer(null)}
         >
           <PlaceCard

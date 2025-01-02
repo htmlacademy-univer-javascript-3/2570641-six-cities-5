@@ -7,21 +7,23 @@ import MainPage from '@/pages/main/main-page';
 import OfferPage from '@/pages/offer/offer-page';
 import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
-import { Offers } from '@/types/offer';
-import { comments } from '@/mocks/comments';
+import { useAppDispatch, useAppSelector } from '@/hooks/index';
+import { setOffersList, } from '@/store/action';
 
-type AppProps = {
-  offers: Offers;
-}
 
-export default function App({offers}: AppProps): JSX.Element {
+export default function App(): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+
+  const dispatch = useAppDispatch();
+  dispatch(setOffersList(offers));
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offers={offers}/>}
+            element={<MainPage />}
           />
           <Route
             path={AppRoute.Login}
@@ -33,13 +35,13 @@ export default function App({offers}: AppProps): JSX.Element {
               <PrivateRoute
                 authorizationStatus={AuthorizationStatus.Auth}
               >
-                <FavoritesPage offers={offers}/>
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
-            element={<OfferPage offers={offers} comments={comments}/>}
+            element={<OfferPage />}
           />
           <Route
             path='*'

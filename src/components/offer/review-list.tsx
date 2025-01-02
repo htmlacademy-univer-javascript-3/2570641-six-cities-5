@@ -1,15 +1,15 @@
-import { Comments } from '@/types/comment';
 import { Review } from '@/components/offer/review';
+import { Reviews } from '@/types/review';
 
 type ReviewListProps = {
-    comments: Comments;
+    reviews: Reviews;
 }
 
-export function ReviewList({ comments }: ReviewListProps) {
+export function ReviewList({ reviews }: ReviewListProps) {
   return (
     <ul className='reviews__list'>
-      {comments.map((comment) => (
-        <Review key={comment.id} comment={comment} />
+      {reviews.map((review) => (
+        <Review key={review.id} review={review} />
       ))}
     </ul>
   );

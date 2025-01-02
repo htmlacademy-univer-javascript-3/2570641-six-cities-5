@@ -9,7 +9,7 @@ import { Offers, Offer } from '@/types/offer';
 type MapProps = {
     location: Location;
     offers: Offers;
-    selectedOffer: Offer | null;
+    selectedOffer: Offer | undefined;
 }
 
 export default function Map({ location, offers, selectedOffer }: MapProps) {

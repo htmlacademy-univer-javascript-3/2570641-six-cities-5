@@ -1,6 +1,6 @@
-import { Comments } from '@/types/comment';
+import { Reviews } from '@/types/review';
 
-export const comments: Comments = [
+export const reviews: Reviews = [
   {
     id: '2247dd28-6acb-4256-84d9-7c826da495ab',
     comment:
