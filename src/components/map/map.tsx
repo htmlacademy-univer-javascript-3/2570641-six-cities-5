@@ -1,6 +1,6 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker, layerGroup} from 'leaflet';
-import {useMap} from '@/hooks/map';
+import useMap  from '@/hooks/map';
 import { Offer, Offers } from '@/types/offer';
 import {URL_PIN, URL_PIN_ACTIVE} from '@/const';
 import 'leaflet/dist/leaflet.css';
