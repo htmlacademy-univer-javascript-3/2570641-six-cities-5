@@ -35,7 +35,7 @@ export const createAPI = (): AxiosInstance => {
     (error: AxiosError<ErrorMessage>) => {
       const parsedError: AxiosResponse<ErrorMessage, unknown> = error.response!;
       parsedError.data.details.forEach((detail) => {
-        detail.messages.forEach((message) => console.warn(message));
+        detail.messages.forEach((message) => console.debug(message)); // eslint-disable-line
       });
 
       throw error;

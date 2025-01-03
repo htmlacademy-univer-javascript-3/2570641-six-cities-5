@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { loadOffers, requireAuthorization, setCity, setSortType, setUserEmail } from './action';
-import { Offers } from '../types/offer';
+import { loadOffer, loadOffers, requireAuthorization, sendReview, setCity, setSortType, setUserEmail } from './action';
+import { Offers, Offer } from '../types/offer';
 import { AuthorizationStatus, DEFAULT_CITY, SortType } from '@/const';
 import { Reviews } from '@/types/review';
 import { City } from '@/types/city';
@@ -14,6 +14,7 @@ type StateType = {
   authorizationStatus: AuthorizationStatus;
   userEmail: string;
   userToken: string;
+  offer: {offer: Offer; nearbyOffers: Offers; reviews: Reviews } | undefined | null;
 };
 
 const initialState: StateType = {
@@ -24,6 +25,7 @@ const initialState: StateType = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userEmail: '',
   userToken: '',
+  offer: undefined,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -42,5 +44,19 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadOffer, (state, { payload }) => {
+      if (payload === null){
+        state.offer = null;
+      } else {
+        state.offer = {
+          offer: payload.offer,
+          nearbyOffers: payload.nearestOffers,
+          reviews: payload.reviews
+        };
+      }
+    })
+    .addCase(sendReview, (state, { payload }) => {
+      state.offer?.reviews.push(payload);
     });
 });
