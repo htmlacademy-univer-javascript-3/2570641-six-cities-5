@@ -7,18 +7,34 @@ import NotFoundScreen from '@/pages/not-found/not-found-page';
 import { ReviewList } from '@/components/offer/review-list';
 import Map from '@/components/map/map';
 import { NearbyList } from '@/components/cards/nearby-list';
-import { useAppSelector } from '@/hooks/index';
+import { useAppDispatch, useAppSelector } from '@/hooks/index';
+import { useEffect } from 'react';
+import { fetchOneOfferAction } from '@/store/api';
+import SpinnerPage from '../spinner/spinner-page';
+import { AuthorizationStatus } from '@/const';
 
 export default function OfferPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const reviews = useAppSelector((state) => state.reviews);
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
-  const params = useParams();
-  const offer = offers!.find((item) => item.id === params.id);
+  const stateOffer = useAppSelector((state) => state.offer);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
-  if (!offer) {
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOneOfferAction({ id }));
+    }
+  }, [id, dispatch]);
+
+  if (stateOffer === undefined) {
+    return <SpinnerPage />;
+  }
+
+  if (stateOffer === null) {
     return <NotFoundScreen />;
   }
+
+  const { offer, nearbyOffers, reviews } = stateOffer;
 
   return (
     <div className="page">
@@ -157,19 +173,19 @@ export default function OfferPage(): JSX.Element {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewList reviews={reviews} />
-                <ReviewForm />
+                {authorizationStatus === AuthorizationStatus.Auth && <ReviewForm />}
               </section>
             </div>
           </div>
           <section className="offer__map map">
             <Map
               location={offer.city.location}
-              offers={offers}
+              offers={nearbyOffers}
               selectedOffer={offer}
             />
           </section>
         </section>
-        <NearbyList offers={offers}></NearbyList>
+        <NearbyList offers={nearbyOffers}></NearbyList>
       </main>
     </div>
   );
