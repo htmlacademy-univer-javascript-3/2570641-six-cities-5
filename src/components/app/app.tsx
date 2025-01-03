@@ -12,9 +12,9 @@ import SpinnerPage from '@/pages/spinner/spinner-page';
 
 
 export default function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const offers = useAppSelector((state) => state.offers);
 
-  if (isOffersDataLoading) {
+  if (offers === undefined) {
     return (
       <SpinnerPage />
     );

@@ -31,7 +31,7 @@ export default function Map({ location, offers, selectedOffer }: MapProps): JSX.
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((offer) => {
+      offers!.forEach((offer) => {
         if (offer && offer.location) {
           const marker = new Marker({
             lat: offer.location.latitude,

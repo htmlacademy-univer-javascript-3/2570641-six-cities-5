@@ -1,7 +1,17 @@
-import axios, {AxiosInstance, InternalAxiosRequestConfig} from 'axios';
+import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import { getToken } from '@/services/tokens';
-import { BACKEND_URL, REQUEST_TIMEOUT } from '@/const';
+import { AUTH_HEADER, BACKEND_URL, REQUEST_TIMEOUT } from '@/const';
+import { toast } from 'react-toastify';
 
+type ErrorMessage = {
+  type: string;
+  message: string;
+  details: {
+    property: string;
+    value: string;
+    messages: string[];
+  }[];
+}
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -14,11 +24,23 @@ export const createAPI = (): AxiosInstance => {
       const token = getToken();
 
       if (token && config.headers) {
-        config.headers['x-token'] = token;
+        config.headers[AUTH_HEADER] = token;
       }
 
       return config;
     },
+  );
+
+  api.interceptors.response.use(
+    (response: AxiosResponse) => response,
+    (error: AxiosError<ErrorMessage>) => {
+      const parsedError: AxiosResponse<ErrorMessage, unknown> = error.response!;
+      parsedError.data.details.forEach((detail) => {
+        detail.messages.forEach((message) => toast.warn(message));
+      });
+
+      throw error;
+    }
   );
 
   return api;

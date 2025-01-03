@@ -6,6 +6,7 @@ import CitiesList from '@/components/map/cities-list';
 import { CITIES, SortType } from '@/const';
 import { useAppSelector } from '@/hooks/index';
 import SortingOptions from '@/components/cards/card-sort';
+import HeaderNav from '@/components/header/header';
 
 export default function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
@@ -15,10 +16,10 @@ export default function MainPage(): JSX.Element {
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
+  const selectedOffer = offers!.find((offer) => offer.id === activeOfferId);
 
   useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
+    const filteredOffers = offers!.filter((offer) => offer.city.name === city.name);
 
     const sortedOffers = [...filteredOffers].sort((a, b) => {
       switch (sortType) {
@@ -59,27 +60,7 @@ export default function MainPage(): JSX.Element {
                   />
                 </a>
               </div>
-              <nav className='header__nav'>
-                <ul className='header__nav-list'>
-                  <li className='header__nav-item user'>
-                    <a
-                      className='header__nav-link header__nav-link--profile'
-                      href='#'
-                    >
-                      <div className='header__avatar-wrapper user__avatar-wrapper'></div>
-                      <span className='header__user-name user__name'>
-                        Oliver.conner@gmail.com
-                      </span>
-                      <span className='header__favorite-count'>3</span>
-                    </a>
-                  </li>
-                  <li className='header__nav-item'>
-                    <a className='header__nav-link' href='#'>
-                      <span className='header__signout'>Sign out</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <HeaderNav />
             </div>
           </div>
         </header>
@@ -95,7 +76,7 @@ export default function MainPage(): JSX.Element {
             <div className='cities__places-container container'>
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
-                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
+                <b className="places__found">{`${currentCityOffers!.length} places to stay in ${city.name}`}</b>
                 <SortingOptions />
                 <div className='cities__places-list places__list tabs__content'>
                   <OffersList

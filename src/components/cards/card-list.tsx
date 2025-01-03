@@ -10,7 +10,7 @@ type OffersListProps = {
 export default function OffersList(props: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
-      {props.offers.map((offer) => (
+      {props.offers!.map((offer) => (
         <div
           key={offer.id}
           onMouseEnter={() => props.setSelectedOffer(offer.id)}

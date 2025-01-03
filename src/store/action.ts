@@ -8,8 +8,8 @@ export const loadOffers = createAction<Offers>('offers/loadOffers');
 export const loadReviews = createAction<Reviews>('reviews/loadReviews');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requireAuthorization');
+export const setUserEmail = createAction<string>('setUserEmail');
 export const setError = createAction<string | null>('setError');
-export const setOffersDataLoadingStatus = createAction<boolean>('setOffersDataLoadingStatus');
 
 export const setCity = createAction<City>('city/setCity');
 export const setSortType = createAction<SortType>('setSortType');
