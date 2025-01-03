@@ -13,7 +13,7 @@ export function NearbyList({ offers }: NearbyListProps) {
           Other places in the neighbourhood
         </h2>
         <div className='near-places__list places__list'>
-          {offers.map((offer) => (
+          {offers!.map((offer) => (
             <NearbyCard key={offer.id} offer={offer} />
           ))}
         </div>

@@ -13,7 +13,7 @@ export default function MainPage(): JSX.Element {
   const city = useAppSelector((state) => state.city);
   const sortType = useAppSelector((state) => state.sortType);
 
-  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers!);
+  const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
   const selectedOffer = offers!.find((offer) => offer.id === activeOfferId);
@@ -76,7 +76,7 @@ export default function MainPage(): JSX.Element {
             <div className='cities__places-container container'>
               <section className='cities__places places'>
                 <h2 className='visually-hidden'>Places</h2>
-                <b className="places__found">{`${currentCityOffers.length} places to stay in ${city.name}`}</b>
+                <b className="places__found">{`${currentCityOffers!.length} places to stay in ${city.name}`}</b>
                 <SortingOptions />
                 <div className='cities__places-list places__list tabs__content'>
                   <OffersList

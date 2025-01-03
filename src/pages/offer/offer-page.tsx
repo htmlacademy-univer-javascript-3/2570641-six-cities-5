@@ -14,7 +14,7 @@ export default function OfferPage(): JSX.Element {
   const reviews = useAppSelector((state) => state.reviews);
 
   const params = useParams();
-  const offer = offers.find((item) => item.id === params.id);
+  const offer = offers!.find((item) => item.id === params.id);
 
   if (!offer) {
     return <NotFoundScreen />;
@@ -29,7 +29,7 @@ export default function OfferPage(): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <HeaderNav offers={offers}/>
+            <HeaderNav/>
           </div>
         </div>
       </header>
