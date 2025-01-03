@@ -17,7 +17,7 @@ export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
-  const stateOffer = useAppSelector((state) => state.offer);
+  const stateOffer = useAppSelector((state) => state.CURRENT_OFFER);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   useEffect(() => {
@@ -26,15 +26,16 @@ export default function OfferPage(): JSX.Element {
     }
   }, [id, dispatch]);
 
+  const { offer, nearbyOffers, reviews, notFound } = stateOffer;
+
   if (stateOffer === undefined) {
     return <SpinnerPage />;
   }
 
-  if (stateOffer === null) {
+  if (notFound) {
     return <NotFoundScreen />;
   }
 
-  const { offer, nearbyOffers, reviews } = stateOffer;
 
   return (
     <div className="page">

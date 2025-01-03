@@ -16,10 +16,10 @@ export default function MainPage(): JSX.Element {
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const selectedOffer = offers!.find((offer) => offer.id === activeOfferId);
+  const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
 
   useEffect(() => {
-    const filteredOffers = offers!.filter((offer) => offer.city.name === city.name);
+    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
 
     const sortedOffers = [...filteredOffers].sort((a, b) => {
       switch (sortType) {

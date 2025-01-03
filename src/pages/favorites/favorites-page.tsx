@@ -8,7 +8,7 @@ import { useAppSelector } from '@/hooks/index';
 export default function FavoritesPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
 
-  const favorites = offers!.filter((offer) => offer.isFavorite);
+  const favorites = offers.filter((offer) => offer.isFavorite);
 
   const cities = Array.from(new Set(favorites.map((offer) => offer.city.name))).sort();
 

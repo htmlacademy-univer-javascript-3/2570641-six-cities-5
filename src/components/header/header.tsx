@@ -5,7 +5,7 @@ import { logoutAction } from '@/store/api';
 
 export default function HeaderNav(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const favoritesCount = offers!.filter((offer) => offer.isFavorite).length;
+  const favoritesCount = offers.filter((offer) => offer.isFavorite).length;
 
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
