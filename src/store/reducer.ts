@@ -1,25 +1,29 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setOffersDataLoadingStatus, loadOffers, setCity, setSortType } from './action';
+import { loadOffers, requireAuthorization, setCity, setSortType, setUserEmail } from './action';
 import { Offers } from '../types/offer';
-import { DEFAULT_CITY, SortType } from '@/const';
+import { AuthorizationStatus, DEFAULT_CITY, SortType } from '@/const';
 import { Reviews } from '@/types/review';
 import { City } from '@/types/city';
 
 
 type StateType = {
   city: City;
-  offers: Offers;
+  offers: Offers | undefined;
   reviews: Reviews;
   sortType: SortType;
-  isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  userEmail: string;
+  userToken: string;
 };
 
 const initialState: StateType = {
   city: DEFAULT_CITY,
-  offers: [],
+  offers: undefined,
   reviews: [],
   sortType: SortType.Popular,
-  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  userEmail: '',
+  userToken: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -30,10 +34,13 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setSortType, (state, { payload }) => {
       state.sortType = payload;
     })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
-      state.isOffersDataLoading = action.payload;
-    })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(setUserEmail, (state, { payload }) => {
+      state.userEmail = payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
