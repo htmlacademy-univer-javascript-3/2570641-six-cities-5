@@ -4,7 +4,7 @@ import { CurrentOfferData } from '@/types/state';
 import { Offer, Offers } from '@/types/offer';
 import { Review, Reviews } from '@/types/review';
 
-const initialState: CurrentOfferData = undefined;
+const initialState: CurrentOfferData = null;
 
 export const currentOfferData = createSlice({
   name: NameSpace.CurrentOffer,

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import {useParams} from 'react-router-dom';
 import ReviewForm from '@/components/offer/review-form';
 import NotFoundScreen from '@/pages/not-found/not-found-page';
-import { ReviewList } from '@/components/offer/review-list';
+import ReviewList from '@/components/offer/review-list';
 import Map from '@/components/map/map';
 import { NearbyList } from '@/components/cards/nearby-list';
 import { useAppDispatch, useAppSelector } from '@/hooks/index';
@@ -12,13 +12,15 @@ import { useEffect } from 'react';
 import { fetchOneOfferAction } from '@/store/api';
 import SpinnerPage from '../spinner/spinner-page';
 import { AuthorizationStatus } from '@/const';
+import { getAuthorizationStatus } from '@/store/user-process/selectors';
+import { getOfferState } from '@/store/offer-data/selectors';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const { id } = useParams();
 
-  const stateOffer = useAppSelector((state) => state.CURRENT_OFFER);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const stateOffer = useAppSelector(getOfferState);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
     if (id) {
@@ -26,13 +28,14 @@ export default function OfferPage(): JSX.Element {
     }
   }, [id, dispatch]);
 
-  const { offer, nearbyOffers, reviews, notFound } = stateOffer;
 
-  if (stateOffer === undefined) {
+  if (stateOffer === null) {
     return <SpinnerPage />;
   }
 
-  if (notFound) {
+  const { offer, nearbyOffers, reviews, notFound } = stateOffer;
+
+  if (notFound || offer === null) {
     return <NotFoundScreen />;
   }
 

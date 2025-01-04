@@ -12,7 +12,7 @@ export const appData = createSlice({
   name: NameSpace.App,
   initialState,
   reducers: {
-    changeCity: (state, action: PayloadAction<City>) => {
+    setCity: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
     },
     setSortType: (state, action: PayloadAction<SortType>) => {
@@ -21,4 +21,4 @@ export const appData = createSlice({
   },
 });
 
-export const { changeCity, setSortType } = appData.actions;
+export const { setCity, setSortType } = appData.actions;

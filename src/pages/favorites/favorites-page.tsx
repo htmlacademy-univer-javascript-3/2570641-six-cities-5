@@ -4,11 +4,12 @@ import Header from '@/components/header/header';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@/const';
 import { useAppSelector } from '@/hooks/index';
+import { getOffers } from '@/store/offers-data/selectors';
 
 export default function FavoritesPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(getOffers);
 
-  const favorites = offers.filter((offer) => offer.isFavorite);
+  const favorites = offers!.filter((offer) => offer.isFavorite);
 
   const cities = Array.from(new Set(favorites.map((offer) => offer.city.name))).sort();
 

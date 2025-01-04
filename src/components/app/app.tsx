@@ -9,12 +9,16 @@ import FavoritesPage from '@/pages/favorites/favorites-page';
 import NotFoundPage from '@/pages/not-found/not-found-page';
 import { useAppSelector } from '@/hooks';
 import SpinnerPage from '@/pages/spinner/spinner-page';
+import { getOffers } from '@/store/offers-data/selectors';
+import { getAuthorizationStatus } from '@/store/user-process/selectors';
 
 
 export default function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offers = useAppSelector(getOffers);
 
-  if (offers === undefined) {
+
+  if (offers === undefined || authorizationStatus === AuthorizationStatus.Unknown) {
     return (
       <SpinnerPage />
     );

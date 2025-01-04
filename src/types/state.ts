@@ -24,7 +24,7 @@ export type CurrentOfferData = {
     nearbyOffers: Offers;
     reviews: Reviews;
     notFound: boolean;
-} | undefined;
+} | null;
 
 export type OffersData = {
     offers: Offers;
