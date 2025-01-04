@@ -4,20 +4,31 @@ import { CurrentOfferData } from '@/types/state';
 import { Offer, Offers } from '@/types/offer';
 import { Review, Reviews } from '@/types/review';
 
-const initialState: CurrentOfferData = null;
+const initialState: CurrentOfferData = {
+  offer: null,
+  nearbyOffers: [],
+  reviews: [],
+  notFound: false,
+  isLoad: false,
+};
 
 export const currentOfferData = createSlice({
   name: NameSpace.CurrentOffer,
   initialState,
   reducers: {
     loadOffer: (state: CurrentOfferData, action: PayloadAction<{ offer: Offer; nearbyOffers: Offers; reviews: Reviews}>) => {
-      state = {offer: action.payload.offer, nearbyOffers: action.payload.nearbyOffers, reviews: action.payload.reviews, notFound: false};
+      state.offer = action.payload.offer;
+      state.nearbyOffers = action.payload.nearbyOffers;
+      state.reviews = action.payload.reviews;
+      state.notFound = false;
+      state.isLoad = true;
     },
     offerNotFound: (state: CurrentOfferData) => {
-      state!.notFound = true;
+      state.notFound = true;
+      state.isLoad = true;
     },
     sendReview: (state: CurrentOfferData, action: PayloadAction<Review>) => {
-      state!.reviews.push(action.payload);
+      state.reviews.push(action.payload);
     },
   },
 });

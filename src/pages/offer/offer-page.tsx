@@ -29,16 +29,14 @@ export default function OfferPage(): JSX.Element {
   }, [id, dispatch]);
 
 
-  if (stateOffer === null) {
+  const { offer, nearbyOffers, reviews, notFound, isLoad } = stateOffer;
+  if (isLoad) {
     return <SpinnerPage />;
   }
-
-  const { offer, nearbyOffers, reviews, notFound } = stateOffer;
 
   if (notFound || offer === null) {
     return <NotFoundScreen />;
   }
-
 
   return (
     <div className="page">
