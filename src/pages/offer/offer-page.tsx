@@ -6,7 +6,7 @@ import ReviewForm from '@/components/offer/review-form';
 import NotFoundScreen from '@/pages/not-found/not-found-page';
 import ReviewList from '@/components/offer/review-list';
 import Map from '@/components/map/map';
-import { NearbyList } from '@/components/cards/nearby-list';
+import { NearbyList } from '@/components/offers/nearby-list';
 import { useAppDispatch, useAppSelector } from '@/hooks/index';
 import { useEffect } from 'react';
 import { fetchOneOfferAction } from '@/store/api';

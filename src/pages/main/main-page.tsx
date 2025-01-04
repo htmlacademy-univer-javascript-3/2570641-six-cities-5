@@ -1,11 +1,11 @@
-import OffersList from '@/components/cards/card-list';
+import OffersList from '@/components/offers/offers-list';
 import {Offers} from '@/types/offer';
 import Map from '@/components/map/map';
 import {useState, useEffect} from 'react';
 import CitiesList from '@/components/map/cities-list';
 import { CITIES, SortType } from '@/const';
 import { useAppSelector } from '@/hooks/index';
-import SortingOptions from '@/components/cards/card-sort';
+import SortingOptions from '@/components/offers/offers-sort';
 import HeaderNav from '@/components/header/header';
 import SpinnerPage from '../spinner/spinner-page';
 import { getOffers } from '@/store/offers-data/selectors';
