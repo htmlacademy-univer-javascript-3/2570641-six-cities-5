@@ -92,3 +92,11 @@ export const REQUEST_TIMEOUT = 5000;
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 export const AUTH_HEADER = 'X-Token';
 export const NOT_LOGIN_HTTP_STATUSES: StatusCodes[] = [StatusCodes.BAD_REQUEST,];
+export const SPINNER_GIF_URL = 'https://storage.yandexcloud.net/html-academy-project-store/2025-01-03-20.41.34.gif';
+
+export enum NameSpace {
+  App = 'APP',
+  User = 'USER',
+  CurrentOffer = 'CURRENT_OFFER',
+  Offers = 'OFFERS',
+}

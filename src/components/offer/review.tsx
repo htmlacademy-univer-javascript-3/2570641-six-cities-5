@@ -1,4 +1,5 @@
 import { Review as ReviewType } from '@/types/review';
+import { memo } from 'react';
 
 type ReviewProps = {
     review: ReviewType;
@@ -33,3 +34,6 @@ export function Review({ review }: ReviewProps) {
   );
 
 }
+
+const MemoizedReviewItem = memo(Review);
+export default MemoizedReviewItem;

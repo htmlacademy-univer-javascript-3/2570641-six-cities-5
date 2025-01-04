@@ -2,15 +2,17 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { logoutAction } from '@/store/api';
+import { getAuthorizationStatus, getUserEmail } from '@/store/user-process/selectors';
+import { getOffers } from '@/store/offers-data/selectors';
+import { memo } from 'react';
 
-export default function HeaderNav(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
+function HeaderNav(): JSX.Element {
+  const offers = useAppSelector(getOffers);
   const favoritesCount = offers!.filter((offer) => offer.isFavorite).length;
 
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userEmail = useAppSelector((state) => state.userEmail);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userEmail = useAppSelector(getUserEmail);
   const handleSignOut = () => {
     dispatch(logoutAction());
   };
@@ -47,3 +49,6 @@ export default function HeaderNav(): JSX.Element {
   );
 
 }
+
+const MemoizedHeaderNav = memo(HeaderNav);
+export default MemoizedHeaderNav;

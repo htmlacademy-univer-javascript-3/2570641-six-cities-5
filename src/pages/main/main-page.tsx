@@ -7,16 +7,18 @@ import { CITIES, SortType } from '@/const';
 import { useAppSelector } from '@/hooks/index';
 import SortingOptions from '@/components/cards/card-sort';
 import HeaderNav from '@/components/header/header';
+import SpinnerPage from '../spinner/spinner-page';
+import { getOffers } from '@/store/offers-data/selectors';
+import { getCity, getSortType } from '@/store/app-data/selectors';
 
 export default function MainPage(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const city = useAppSelector((state) => state.city);
-  const sortType = useAppSelector((state) => state.sortType);
+  const offers = useAppSelector(getOffers);
+  const city = useAppSelector(getCity);
+  const sortType = useAppSelector(getSortType);
 
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
   const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
-  const selectedOffer = offers!.find((offer) => offer.id === activeOfferId);
 
   useEffect(() => {
     const filteredOffers = offers!.filter((offer) => offer.city.name === city.name);
@@ -36,6 +38,15 @@ export default function MainPage(): JSX.Element {
 
     setCurrentCityOffers(sortedOffers);
   }, [city, offers, sortType]);
+
+
+  if (offers === undefined) {
+    return (
+      <SpinnerPage />
+    );
+  }
+
+  const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
 
   return (
     <>

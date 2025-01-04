@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { SortType } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks/index';
-import { setSortType } from '@/store/action';
+import { getSortType } from '@/store/app-data/selectors';
+import { setSortType } from '@/store/app-data/app-data';
 
-export default function SortingOptions(): JSX.Element {
+function SortingOptions(): JSX.Element {
   const dispatch = useAppDispatch();
-  const currentSortType = useAppSelector((state) => state.sortType);
+  const currentSortType = useAppSelector(getSortType);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOptionClick = (sortType: SortType) => {
@@ -40,3 +41,7 @@ export default function SortingOptions(): JSX.Element {
     </form>
   );
 }
+
+
+const MemoizedSortingOptions = memo(SortingOptions);
+export default MemoizedSortingOptions;

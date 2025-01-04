@@ -2,11 +2,13 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AppDispatch, State } from '@/types/state';
 import { Offers, Offer } from '@/types/offer';
-import { loadOffer, loadOffers, requireAuthorization, sendReview, setUserEmail } from '@/store/action';
 import {APIRoute, AuthorizationStatus } from '@/const';
 import { dropToken, saveToken } from '@/services/tokens';
 import { AuthCredentials, ClientUser } from '@/types/auth';
 import { Review, ReviewForm, Reviews } from '@/types/review';
+import { loadOffers } from './offers-data/offers-data';
+import { setAuthorizationStatus, setUserEmail } from './user-process/user-process';
+import { loadOffer, offerNotFound, sendReview } from './offer-data/offer-data';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch: AppDispatch;
@@ -30,10 +32,10 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
     try {
       const response = await api.get(APIRoute.Login);
       const data = response.data as { email: string };
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
       dispatch(setUserEmail(data.email));
     } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   }
 );
@@ -47,7 +49,7 @@ export const loginAction = createAsyncThunk<void, AuthCredentials, {
   async ({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<ClientUser>(APIRoute.Login, {email, password});
     saveToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     dispatch(setUserEmail(email));
   },
 );
@@ -61,7 +63,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
   },
 );
 
@@ -78,11 +80,11 @@ export const fetchOneOfferAction = createAsyncThunk<void,
   async ({ id }, { dispatch, extra: api }) => {
     try {
       const { data: offer } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-      const { data: nearestOffers } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+      const { data: nearbyOffers } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
       const { data: reviews } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
-      dispatch(loadOffer({ offer, nearestOffers, reviews }));
+      dispatch(loadOffer({ offer, nearbyOffers, reviews }));
     } catch{
-      dispatch(loadOffer(null));
+      dispatch(offerNotFound());
     }
   }
 );
