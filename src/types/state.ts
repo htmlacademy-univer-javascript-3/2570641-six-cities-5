@@ -29,4 +29,8 @@ export type CurrentOfferData = {
 
 export type OffersData = {
     offers: Offers;
-} | undefined;
+};
+
+export type FavoritesData = {
+    favorites: Offers;
+};

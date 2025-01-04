@@ -14,7 +14,6 @@ export const offersData = createSlice({
     loadOffers: (state, action: PayloadAction<Offers>) => {
       state.offers = action.payload;
     },
-
   },
 });
 

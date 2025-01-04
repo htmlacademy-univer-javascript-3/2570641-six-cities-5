@@ -1,5 +1,5 @@
 import { Offer } from '@/types/offer';
-import PlaceCard from '@/components/cards/place-card';
+import PlaceCard from '@/components/offers/place-card';
 import { memo } from 'react';
 
 type NearbyProps = {

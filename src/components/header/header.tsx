@@ -3,12 +3,12 @@ import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { logoutAction } from '@/store/api';
 import { getAuthorizationStatus, getUserEmail } from '@/store/user-process/selectors';
-import { getOffers } from '@/store/offers-data/selectors';
 import { memo } from 'react';
+import { getFavorites } from '@/store/favorites/selectors';
 
 function HeaderNav(): JSX.Element {
-  const offers = useAppSelector(getOffers);
-  const favoritesCount = offers!.filter((offer) => offer.isFavorite).length;
+  const favorites = useAppSelector(getFavorites)!;
+  const favoritesCount = favorites.filter((offer) => offer.isFavorite).length;
 
   const dispatch = useAppDispatch();
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
