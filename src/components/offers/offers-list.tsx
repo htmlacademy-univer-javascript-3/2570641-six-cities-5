@@ -54,7 +54,8 @@ function OffersList({offers, city}: OffersListProps): JSX.Element {
 
 const MemoizedOffersList = memo(
   OffersList,
-  (prevProps, nextProps) => prevProps.offers?.map((offer) => offer.id).join() === nextProps.offers?.map((offer) => offer.id).join()
+  (prevProps, nextProps) => prevProps.offers?.map((offer) => offer.id).join() === nextProps.offers?.map((offer) => offer.id).join() &&
+  prevProps.offers?.map((offer) => offer.isFavorite).join() === nextProps.offers?.map((offer) => offer.isFavorite).join()
 
 );
 export default MemoizedOffersList;

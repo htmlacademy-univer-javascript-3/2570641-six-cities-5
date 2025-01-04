@@ -99,4 +99,5 @@ export enum NameSpace {
   User = 'USER',
   CurrentOffer = 'CURRENT_OFFER',
   Offers = 'OFFERS',
+  Favorites = 'FAVORITES',
 }

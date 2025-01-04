@@ -30,7 +30,7 @@ export default function OfferPage(): JSX.Element {
 
 
   const { offer, nearbyOffers, reviews, notFound, isLoad } = stateOffer;
-  if (isLoad) {
+  if (!isLoad) {
     return <SpinnerPage />;
   }
 

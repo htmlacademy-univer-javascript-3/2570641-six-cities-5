@@ -9,6 +9,7 @@ import { Review, ReviewForm, Reviews } from '@/types/review';
 import { loadOffers } from './offers-data/offers-data';
 import { setAuthorizationStatus, setUserEmail } from './user-process/user-process';
 import { loadOffer, offerNotFound, sendReview } from './offer-data/offer-data';
+import { setFavoriteStatus, updateFavorites } from './favorites/favorites';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
     dispatch: AppDispatch;
@@ -100,3 +101,20 @@ export const sendReviewAction = createAsyncThunk<void,{ review: ReviewForm; id: 
       });
     dispatch(sendReview(responseReview));
   });
+
+
+export const fetchFavorites = createAsyncThunk<void, undefined, { dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
+  'favorites/fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data: responseOffers} = await api.get<Offers>(`${APIRoute.Favorite}`);
+    dispatch(updateFavorites(responseOffers));
+  }
+);
+
+export const sendChangeFavoritesStatusAction = createAsyncThunk<void, Offer , {dispatch: AppDispatch; state: State; extra: AxiosInstance}>(
+  'favorites/changeFavoritesStatusAction',
+  async (offer , {dispatch, extra: api}) => {
+    const { data: responseOffer } = await api.post<Offer>(`${APIRoute.Favorite}/${offer.id}/${offer.isFavorite ? 0 : 1}`);
+    dispatch(setFavoriteStatus(responseOffer));
+  }
+);
