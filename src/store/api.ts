@@ -80,9 +80,9 @@ export const fetchOneOfferAction = createAsyncThunk<void,
   async ({ id }, { dispatch, extra: api }) => {
     try {
       const { data: offer } = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
-      const { data: nearestOffers } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
+      const { data: nearbyOffers } = await api.get<Offers>(`${APIRoute.Offers}/${id}/nearby`);
       const { data: reviews } = await api.get<Reviews>(`${APIRoute.Comments}/${id}`);
-      dispatch(loadOffer({ offer, nearestOffers, reviews }));
+      dispatch(loadOffer({ offer, nearbyOffers, reviews }));
     } catch{
       dispatch(offerNotFound());
     }
