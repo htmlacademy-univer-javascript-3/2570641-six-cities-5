@@ -1,15 +1,14 @@
 import OffersList from '@/components/offers/offers-list';
 import {Offers} from '@/types/offer';
-import Map from '@/components/map/map';
 import {useState, useEffect} from 'react';
 import CitiesList from '@/components/map/cities-list';
 import { CITIES, SortType } from '@/const';
 import { useAppSelector } from '@/hooks/index';
-import SortingOptions from '@/components/offers/offers-sort';
 import HeaderNav from '@/components/header/header';
 import SpinnerPage from '../spinner/spinner-page';
 import { getOffers } from '@/store/offers-data/selectors';
 import { getCity, getSortType } from '@/store/app-data/selectors';
+import NotFoundOffersList from '@/components/offers/empty-offers-list';
 
 export default function MainPage(): JSX.Element {
   const offers = useAppSelector(getOffers);
@@ -17,7 +16,6 @@ export default function MainPage(): JSX.Element {
   const sortType = useAppSelector(getSortType);
 
   const [currentCityOffers, setCurrentCityOffers] = useState<Offers>(offers);
-  const [activeOfferId, setActiveOfferId] = useState<string | null>(null);
 
 
   useEffect(() => {
@@ -45,8 +43,6 @@ export default function MainPage(): JSX.Element {
       <SpinnerPage />
     );
   }
-
-  const selectedOffer = offers.find((offer) => offer.id === activeOfferId);
 
   return (
     <>
@@ -84,28 +80,9 @@ export default function MainPage(): JSX.Element {
             </section>
           </div>
           <div className='cities'>
-            <div className='cities__places-container container'>
-              <section className='cities__places places'>
-                <h2 className='visually-hidden'>Places</h2>
-                <b className="places__found">{`${currentCityOffers!.length} places to stay in ${city.name}`}</b>
-                <SortingOptions />
-                <div className='cities__places-list places__list tabs__content'>
-                  <OffersList
-                    offers={currentCityOffers}
-                    setSelectedOffer={setActiveOfferId}
-                  />
-                </div>
-              </section>
-              <div className='cities__right-section'>
-                <section className='cities__map map'>
-                  <Map
-                    location={city.location}
-                    offers={currentCityOffers}
-                    selectedOffer={selectedOffer}
-                  />
-                </section>
-              </div>
-            </div>
+            {currentCityOffers!.length > 0
+              ? <OffersList offers={currentCityOffers} city={city} />
+              : <NotFoundOffersList city={city} />}
           </div>
         </main>
       </div>
