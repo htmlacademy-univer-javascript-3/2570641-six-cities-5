@@ -1,10 +1,10 @@
 import { useAppDispatch } from '@/hooks/index';
 import { sendReviewAction } from '@/store/api';
 import { ReviewForm } from '@/types/review';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-export default function ReviewSendingForm(): JSX.Element {
+function ReviewSendingForm(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDispatch();
 
@@ -79,3 +79,7 @@ export default function ReviewSendingForm(): JSX.Element {
     </form>
   );
 }
+
+
+const MemoizedReviewSendingForm = memo(ReviewSendingForm);
+export default MemoizedReviewSendingForm;

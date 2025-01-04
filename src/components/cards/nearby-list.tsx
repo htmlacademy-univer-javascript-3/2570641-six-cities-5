@@ -1,5 +1,6 @@
 import { Offers } from '@/types/offer';
-import { NearbyCard } from '@/components/cards/nearby';
+import NearbyCard from '@/components/cards/nearby';
+import { memo } from 'react';
 
 type NearbyListProps = {
     offers: Offers;
@@ -21,3 +22,11 @@ export function NearbyList({ offers }: NearbyListProps) {
     </div>
   );
 }
+
+
+const MemoizedNearbyOffersList = memo(
+  NearbyList,
+  (prevProps, nextProps) =>
+    prevProps.offers?.map((offer) => offer.id).join() === nextProps.offers?.map((offer) => offer.id).join()
+);
+export default MemoizedNearbyOffersList;

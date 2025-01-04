@@ -1,11 +1,12 @@
 import { Review } from '@/components/offer/review';
 import { Reviews } from '@/types/review';
+import { memo } from 'react';
 
 type ReviewListProps = {
     reviews: Reviews;
 }
 
-export function ReviewList({ reviews }: ReviewListProps) {
+function ReviewList({ reviews }: ReviewListProps) {
   return (
     <ul className='reviews__list'>
       {reviews.map((review) => (
@@ -14,3 +15,10 @@ export function ReviewList({ reviews }: ReviewListProps) {
     </ul>
   );
 }
+
+
+const MemoizedReviewsList = memo(
+  ReviewList,
+  (prevProps, nextProps) => prevProps.reviews.map((review) => review.id).join() === nextProps.reviews.map((review) => review.id).join()
+);
+export default MemoizedReviewsList;

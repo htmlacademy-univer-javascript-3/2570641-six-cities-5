@@ -1,5 +1,6 @@
 import { Offers } from '@/types/offer';
 import PlaceCard from '@/components/cards/place-card';
+import { memo } from 'react';
 
 type OffersListProps = {
     offers: Offers;
@@ -7,7 +8,7 @@ type OffersListProps = {
 };
 
 
-export default function OffersList(props: OffersListProps): JSX.Element {
+function OffersList(props: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {props.offers!.map((offer) => (
@@ -24,3 +25,11 @@ export default function OffersList(props: OffersListProps): JSX.Element {
     </div>
   );
 }
+
+
+const MemoizedOffersList = memo(
+  OffersList,
+  (prevProps, nextProps) => prevProps.offers?.map((offer) => offer.id).join() === nextProps.offers?.map((offer) => offer.id).join()
+
+);
+export default MemoizedOffersList;

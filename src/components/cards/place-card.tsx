@@ -1,13 +1,14 @@
 import {Offer} from '@/types/offer';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@/const';
+import { memo } from 'react';
 
 type PlaceCardProps = {
   offer: Offer;
 }
 
 
-export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
+function PlaceCard({offer}: PlaceCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       {offer.isPremium &&
@@ -44,3 +45,11 @@ export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
     </article>
   );
 }
+
+
+const MemoizedPlaceCard = memo(PlaceCard, (prevProps, nextProps) =>
+  prevProps.offer.id === nextProps.offer.id &&
+  prevProps.offer.isFavorite === nextProps.offer.isFavorite
+);
+
+export default MemoizedPlaceCard;

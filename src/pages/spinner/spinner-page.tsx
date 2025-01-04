@@ -1,5 +1,7 @@
+import { SPINNER_GIF_URL } from '@/const';
+
 export default function SpinnerPage(): JSX.Element {
   return (
-    <p>Loading... Be patient.</p>
+    <img style={{ textAlign: 'center', width: '100%', height: '100%' }} src={SPINNER_GIF_URL} alt="loading..." />
   );
 }

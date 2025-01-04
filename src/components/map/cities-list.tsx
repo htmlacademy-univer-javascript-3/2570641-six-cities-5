@@ -1,12 +1,13 @@
 import { useAppDispatch } from '@/hooks/index';
-import { setCity } from '@/store/action';
+import { setCity } from '@/store/app-data/app-data';
 import { Cities } from '@/types/city';
+import { memo } from 'react';
 
 type CitiesListProps = {
   cities: Cities;
 };
 
-export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
+function CitiesList({ cities }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleCityChange = (city: string) => {
@@ -29,3 +30,7 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
     </ul>
   );
 }
+
+
+const MemoizedCitiesList = memo(CitiesList, (prevProps, nextProps) => prevProps.cities.map((city) => city.name).join() === nextProps.cities.map((city) => city.name).join());
+export default MemoizedCitiesList;

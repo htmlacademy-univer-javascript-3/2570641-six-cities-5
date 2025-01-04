@@ -1,11 +1,12 @@
 import { Offer } from '@/types/offer';
 import PlaceCard from '@/components/cards/place-card';
+import { memo } from 'react';
 
 type NearbyProps = {
     offer: Offer;
 }
 
-export function NearbyCard({ offer }: NearbyProps) {
+function NearbyCard({ offer }: NearbyProps) {
   return (
     <article className='near-places__card place-card'>
       <div className='near-places__image-wrapper place-card__image-wrapper'>
@@ -23,3 +24,6 @@ export function NearbyCard({ offer }: NearbyProps) {
     </article>
   );
 }
+
+const MemoizedNearbyCard = memo(NearbyCard);
+export default MemoizedNearbyCard;
