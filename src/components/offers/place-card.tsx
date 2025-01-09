@@ -2,7 +2,7 @@ import {Offer} from '@/types/offer';
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { useAppDispatch, useAppSelector } from '@/hooks';
-import { fetchOffersAction, sendChangeFavoritesStatusAction } from '@/store/api';
+import { fetchFavorites, fetchOffersAction, sendChangeFavoritesStatusAction } from '@/store/api';
 import { getAuthorizationStatus } from '@/store/user-process/selectors';
 
 type PlaceCardProps = {
@@ -21,6 +21,7 @@ export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
     }else{
       dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
         dispatch(fetchOffersAction());
+        dispatch(fetchFavorites());
       });
     }
   };
