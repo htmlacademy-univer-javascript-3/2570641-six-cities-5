@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '@/hooks/index';
 import { useState } from 'react';
-import { fetchOffersAction, loginAction } from '@/store/api';
+import { fetchFavorites, fetchOffersAction, loginAction } from '@/store/api';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/const';
 
@@ -23,6 +23,7 @@ export default function LoginScreen(): JSX.Element {
     setPasswordError('');
     dispatch(loginAction({ login: email, password })).then(() => {
       dispatch(fetchOffersAction());
+      dispatch(fetchFavorites());
       navigate(AppRoute.Root);
     });
 

@@ -30,7 +30,12 @@ export const currentOfferData = createSlice({
     sendReview: (state: CurrentOfferData, action: PayloadAction<Review>) => {
       state.reviews.push(action.payload);
     },
+    clearFavorite: (state: CurrentOfferData) => {
+      if (state.offer !== null){
+        state.offer.isFavorite = false;
+      }
+    }
   },
 });
 
-export const { loadOffer, sendReview, offerNotFound } = currentOfferData.actions;
+export const { loadOffer, sendReview, offerNotFound, clearFavorite } = currentOfferData.actions;

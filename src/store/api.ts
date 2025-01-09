@@ -8,7 +8,7 @@ import { AuthCredentials, ClientUser } from '@/types/auth';
 import { Review, ReviewForm, Reviews } from '@/types/review';
 import { loadOffers } from './offers-data/offers-data';
 import { setAuthorizationStatus, setUserEmail } from './user-process/user-process';
-import { loadOffer, offerNotFound, sendReview } from './offer-data/offer-data';
+import { clearFavorite, loadOffer, offerNotFound, sendReview } from './offer-data/offer-data';
 import { setFavoriteStatus, updateFavorites } from './favorites/favorites';
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
@@ -75,6 +75,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     dispatch(fetchOffersAction());
     dispatch(fetchFavorites());
+    dispatch(clearFavorite());
   },
 );
 

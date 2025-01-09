@@ -36,8 +36,8 @@ export default function OfferPage(): JSX.Element {
     }else{
       dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
         dispatch(fetchOffersAction());
-        dispatch(fetchFavorites());
         dispatch(fetchOneOfferAction({id: currentOffer.id}));
+        dispatch(fetchFavorites());
       });
     }
   };
