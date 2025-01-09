@@ -1,8 +1,9 @@
 import {Offer} from '@/types/offer';
-import { Link } from 'react-router-dom';
-import { AppRoute } from '@/const';
-import { useAppDispatch } from '@/hooks';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '@/const';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import { fetchFavorites, fetchOffersAction, sendChangeFavoritesStatusAction } from '@/store/api';
+import { getAuthorizationStatus } from '@/store/user-process/selectors';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -11,12 +12,18 @@ type PlaceCardProps = {
 
 export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
 
   const handleChangeFavoriteStatus = (currentOffer: Offer) => {
-    dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
-      dispatch(fetchOffersAction());
-      dispatch(fetchFavorites());
-    });
+    if (authorizationStatus !== AuthorizationStatus.Auth){
+      navigate(AppRoute.Login);
+    }else{
+      dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
+        dispatch(fetchOffersAction());
+        dispatch(fetchFavorites());
+      });
+    }
   };
 
   return (
@@ -55,11 +62,3 @@ export default function PlaceCard({offer}: PlaceCardProps): JSX.Element {
     </article>
   );
 }
-
-
-// const MemoizedPlaceCard = memo(PlaceCard, (prevProps, nextProps) =>
-//   prevProps.offer.id === nextProps.offer.id &&
-//   prevProps.offer.isFavorite === nextProps.offer.isFavorite
-// );
-
-// export default MemoizedPlaceCard;
