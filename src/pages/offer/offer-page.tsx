@@ -1,7 +1,7 @@
 import Logo from '@/components/header/logo';
 import HeaderNav from '@/components/header/header';
 import { Helmet } from 'react-helmet-async';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import ReviewForm from '@/components/offer/review-form';
 import NotFoundScreen from '@/pages/not-found/not-found-page';
 import ReviewList from '@/components/offer/review-list';
@@ -9,11 +9,12 @@ import Map from '@/components/map/map';
 import { NearbyList } from '@/components/offers/nearby-list';
 import { useAppDispatch, useAppSelector } from '@/hooks/index';
 import { useEffect } from 'react';
-import { fetchOneOfferAction } from '@/store/api';
+import { fetchFavorites, fetchOffersAction, fetchOneOfferAction, sendChangeFavoritesStatusAction } from '@/store/api';
 import SpinnerPage from '../spinner/spinner-page';
-import { AuthorizationStatus } from '@/const';
+import { AppRoute, AuthorizationStatus } from '@/const';
 import { getAuthorizationStatus } from '@/store/user-process/selectors';
 import { getOfferState } from '@/store/offer-data/selectors';
+import { Offer } from '@/types/offer';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ export default function OfferPage(): JSX.Element {
 
   const stateOffer = useAppSelector(getOfferState);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -28,6 +30,17 @@ export default function OfferPage(): JSX.Element {
     }
   }, [id, dispatch]);
 
+  const handleChangeFavoriteStatus = (currentOffer: Offer) => {
+    if (authorizationStatus !== AuthorizationStatus.Auth){
+      navigate(AppRoute.Login);
+    }else{
+      dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
+        dispatch(fetchOffersAction());
+        dispatch(fetchFavorites());
+        dispatch(fetchOneOfferAction({id: currentOffer.id}));
+      });
+    }
+  };
 
   const { offer, nearbyOffers, reviews, notFound, isLoad } = stateOffer;
   if (!isLoad) {
@@ -38,6 +51,7 @@ export default function OfferPage(): JSX.Element {
     return <NotFoundScreen />;
   }
 
+  const limitedNearbyOffers = nearbyOffers?.slice(0, 3);
   return (
     <div className="page">
       <Helmet>
@@ -86,7 +100,7 @@ export default function OfferPage(): JSX.Element {
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className={`offer__bookmark-button ${offer.isFavorite && 'offer__bookmark-button--active'} button`} type="button">
+                <button className={`offer__bookmark-button ${offer.isFavorite && 'offer__bookmark-button--active'} button`} onClick={() => handleChangeFavoriteStatus(offer)} type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -182,12 +196,12 @@ export default function OfferPage(): JSX.Element {
           <section className="offer__map map">
             <Map
               location={offer.city.location}
-              offers={nearbyOffers}
+              offers={limitedNearbyOffers?.concat(offer)}
               selectedOffer={offer}
             />
           </section>
         </section>
-        <NearbyList offers={nearbyOffers}></NearbyList>
+        <NearbyList offers={limitedNearbyOffers}></NearbyList>
       </main>
     </div>
   );

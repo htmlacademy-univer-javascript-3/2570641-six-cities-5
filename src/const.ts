@@ -15,9 +15,9 @@ export enum AppRoute {
 }
 
 export const URL_PIN =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+  '/img/pin.svg';
 export const URL_PIN_ACTIVE =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+  '/img/pin-active.svg';
 
 export const CITIES: Cities = [
   {
