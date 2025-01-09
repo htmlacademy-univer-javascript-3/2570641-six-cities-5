@@ -9,7 +9,7 @@ import Map from '@/components/map/map';
 import { NearbyList } from '@/components/offers/nearby-list';
 import { useAppDispatch, useAppSelector } from '@/hooks/index';
 import { useEffect } from 'react';
-import { fetchFavorites, fetchOffersAction, fetchOneOfferAction, sendChangeFavoritesStatusAction } from '@/store/api';
+import { fetchOffersAction, fetchOneOfferAction, sendChangeFavoritesStatusAction } from '@/store/api';
 import SpinnerPage from '../spinner/spinner-page';
 import { AppRoute, AuthorizationStatus } from '@/const';
 import { getAuthorizationStatus } from '@/store/user-process/selectors';
@@ -36,7 +36,6 @@ export default function OfferPage(): JSX.Element {
     }else{
       dispatch(sendChangeFavoritesStatusAction(currentOffer)).then(() => {
         dispatch(fetchOffersAction());
-        dispatch(fetchFavorites());
         dispatch(fetchOneOfferAction({id: currentOffer.id}));
       });
     }
