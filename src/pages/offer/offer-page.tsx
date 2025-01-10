@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/index';
 import { useEffect } from 'react';
 import { fetchFavorites, fetchOffersAction, fetchOneOfferAction, sendChangeFavoritesStatusAction } from '@/store/api';
 import SpinnerPage from '../spinner/spinner-page';
-import { AppRoute, AuthorizationStatus } from '@/const';
+import { AppRoute, AuthorizationStatus, MAX_NEARBY_OFFERS } from '@/const';
 import { getAuthorizationStatus } from '@/store/user-process/selectors';
 import { getOfferState } from '@/store/offer-data/selectors';
 import { Offer } from '@/types/offer';
@@ -51,7 +51,8 @@ export default function OfferPage(): JSX.Element {
     return <NotFoundScreen />;
   }
 
-  const limitedNearbyOffers = nearbyOffers?.slice(0, 3);
+  const limitedNearbyOffers = nearbyOffers?.slice(0, MAX_NEARBY_OFFERS);
+
   return (
     <div className="page">
       <Helmet>

@@ -1,15 +1,25 @@
 import { Review } from '@/components/offer/review';
+import { MAX_REVIEWS_COUNT } from '@/const';
 import { Reviews } from '@/types/review';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 type ReviewListProps = {
     reviews: Reviews;
 }
 
 function ReviewList({ reviews }: ReviewListProps) {
+
+  const sortedReviews = useMemo(() => {
+    if (!reviews) {
+      return [];
+    }
+    return [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, MAX_REVIEWS_COUNT);
+  }, [reviews]);
+
+
   return (
     <ul className='reviews__list'>
-      {reviews.map((review) => (
+      {sortedReviews.map((review) => (
         <Review key={review.id} review={review} />
       ))}
     </ul>
