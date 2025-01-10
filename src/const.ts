@@ -101,3 +101,6 @@ export enum NameSpace {
   Offers = 'OFFERS',
   Favorites = 'FAVORITES',
 }
+
+export const MAX_NEARBY_OFFERS = 3;
+export const MAX_REVIEWS_COUNT = 10;
